@@ -1,0 +1,9 @@
+<div *ngIf="trial">
+  <h2>{{trial.title}}</h2>
+
+  <p><span>NCT ID: </span>{{trial.id}}</p>
+  <p><span>Phase: </span>{{trial.phase}}</p>
+  <p><span>Status: </span>{{trial.studyStatus}}</p>
+  <p><span>Acronym: </span>{{trial.acronym}}</p>
+  <p><span>Last Updated: </span>{{ trial.lastUpdated * 1000 | date:'longDate' }}</p>
+</div>

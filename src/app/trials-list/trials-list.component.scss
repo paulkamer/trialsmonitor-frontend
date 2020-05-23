@@ -1,0 +1,10 @@
+.trials-list {
+  text-align: left;
+  white-space: nowrap;
+
+  .column-title {
+    max-width: 50em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

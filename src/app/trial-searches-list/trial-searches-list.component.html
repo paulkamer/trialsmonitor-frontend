@@ -1,0 +1,18 @@
+<h1>Searches</h1>
+
+<ul>
+  <li *ngFor="let trialSearch of searches">
+    {{ trialSearch.query }} <span class="clickable" (click)="deleteTrialSearch(trialSearch)">[x]</span>
+  </li>
+</ul>
+
+<div>
+  <h2 class="clickable" (click)="toggleShowAddNew()">+ Add new</h2>
+
+  <form *ngIf="showAddNew" (ngSubmit)="saveTrialSearch()">
+    <div>
+      <input [(ngModel)]="newTrial.query" name="query" type="text" placeholder="query">
+      <button class="button" type="submit">Save</button>
+    </div>
+  </form>
+</div>
