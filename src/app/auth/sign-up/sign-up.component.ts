@@ -1,34 +1,34 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { AuthService } from "../auth.service";
-import { environment } from "src/environments/environment";
-import { Router } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
+import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: "app-sign-up",
-  templateUrl: "./sign-up.component.html",
-  styleUrls: ["./sign-up.component.scss"]
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
   hide = true;
   signupForm: FormGroup = new FormGroup({
-    email: new FormControl("", [Validators.email, Validators.required]),
-    password: new FormControl("", [Validators.required]),
-    fname: new FormControl("", [Validators.min(2)]),
-    lname: new FormControl("", [Validators.min(2)])
+    email: new FormControl('', [Validators.email, Validators.required]),
+    password: new FormControl('', [Validators.required]),
+    fname: new FormControl('', [Validators.min(2)]),
+    lname: new FormControl('', [Validators.min(2)])
   });
 
   get emailInput() {
-    return this.signupForm.get("email");
+    return this.signupForm.get('email');
   }
   get passwordInput() {
-    return this.signupForm.get("password");
+    return this.signupForm.get('password');
   }
   get fnameInput() {
-    return this.signupForm.get("fname");
+    return this.signupForm.get('fname');
   }
   get lnameInput() {
-    return this.signupForm.get("lname");
+    return this.signupForm.get('lname');
   }
 
   constructor(
@@ -39,17 +39,17 @@ export class SignUpComponent implements OnInit {
   ngOnInit() {}
 
   getEmailInputError() {
-    if (this.emailInput.hasError("email")) {
-      return "Please enter a valid email address.";
+    if (this.emailInput.hasError('email')) {
+      return 'Please enter a valid email address.';
     }
-    if (this.emailInput.hasError("required")) {
-      return "An Email is required.";
+    if (this.emailInput.hasError('required')) {
+      return 'An Email is required.';
     }
   }
 
   getPasswordInputError() {
-    if (this.passwordInput.hasError("required")) {
-      return "A password is required.";
+    if (this.passwordInput.hasError('required')) {
+      return 'A password is required.';
     }
   }
 
@@ -73,7 +73,7 @@ export class SignUpComponent implements OnInit {
       .then(data => {
         environment.confirm.email = this.emailInput.value;
         environment.confirm.password = this.passwordInput.value;
-        this._router.navigate(["auth/confirm"]);
+        this._router.navigate(['auth/confirm']);
       })
       .catch(error => console.error(error));
   }

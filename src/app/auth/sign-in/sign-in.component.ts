@@ -15,7 +15,7 @@ import { LoaderService } from 'src/app/loader/loader.service';
 export class SignInComponent {
 
   signinForm: FormGroup = new FormGroup({
-    email: new FormControl('',[ Validators.email, Validators.required ]),
+    email: new FormControl('', [ Validators.email, Validators.required ]),
     password: new FormControl('', [ Validators.required, Validators.min(6) ])
   });
 
@@ -56,15 +56,15 @@ export class SignInComponent {
         this._loader.hide();
         this._notification.show(error.message);
         switch (error.code) {
-          case "UserNotConfirmedException":
+          case 'UserNotConfirmedException':
             environment.confirm.email = this.emailInput.value;
             environment.confirm.password = this.passwordInput.value;
             this._router.navigate(['auth/confirm']);
             break;
-          case "UsernameExistsException":
+          case 'UsernameExistsException':
             this._router.navigate(['auth/signin']);
             break;
         }
-      })
+      });
   }
 }

@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 import { Trial } from '../trial';
-import { Aws4SignerProxy } from '../../lib/Aws4SignerProxy'
+import { Aws4SignerProxy } from '../../lib/Aws4SignerProxy';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class TrialService {
   async getTrials({ limit }): Promise<Trial[]> {
     let url = `${environment.apiHost}${environment.trialsListUrl}`;
 
-    if (limit) url += `?limit=${limit}`;
+    if (limit) { url += `?limit=${limit}`; }
 
     const { headers } = await new Aws4SignerProxy().sign({ url });
 

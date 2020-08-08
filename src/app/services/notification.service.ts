@@ -1,6 +1,6 @@
-import { Injectable, OnDestroy } from "@angular/core";
-import { MatSnackBar, MatSnackBarRef } from "@angular/material/snack-bar";
-import { Subscription } from "rxjs";
+import { Injectable, OnDestroy } from '@angular/core';
+import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+import { Subscription } from 'rxjs';
 
 /**
  * Provides an abstract wrapper around showing a MatSnackbar
@@ -13,7 +13,7 @@ import { Subscription } from "rxjs";
  * set the _params to undefined and unsubscribe.
  */
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class NotificationService implements OnDestroy {
   // Configuration api subscription
@@ -41,7 +41,7 @@ export class NotificationService implements OnDestroy {
    * @param buttonLabel {string}
    * @returns {MatSnackBarRef}
    */
-  show(message: string, buttonLabel: string = "OK"): MatSnackBarRef<any> {
+  show(message: string, buttonLabel: string = 'OK'): MatSnackBarRef<any> {
     const toastTimeout = 8000;
     if (toastTimeout > 0) {
       return this.toast.open(message, buttonLabel, {

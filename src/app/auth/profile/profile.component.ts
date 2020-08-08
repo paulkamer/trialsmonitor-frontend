@@ -13,11 +13,11 @@ import { LoaderService } from 'src/app/loader/loader.service';
 })
 export class ProfileComponent implements OnInit {
   profileForm: FormGroup = new FormGroup({
-    email: new FormControl('',[ Validators.email ]),
+    email: new FormControl('', [ Validators.email ]),
     fname: new FormControl('', [ Validators.min(2) ]),
     lname: new FormControl('', [ Validators.min(2) ])
   });
-  profile:any = {};
+  profile: any = {};
   user: CognitoUser;
 
   get emailInput() { return this.profileForm.get('email'); }
@@ -39,8 +39,8 @@ export class ProfileComponent implements OnInit {
     this.profile = await Auth.currentUserInfo();
     this.user = await Auth.currentAuthenticatedUser();
 
-    this.fnameInput.setValue(this.profile.attributes['given_name']);
-    this.lnameInput.setValue(this.profile.attributes['family_name']);
+    this.fnameInput.setValue(this.profile.attributes.given_name);
+    this.lnameInput.setValue(this.profile.attributes.family_name);
     this.loading.hide();
   }
 
@@ -55,17 +55,17 @@ export class ProfileComponent implements OnInit {
 
   signOut() {
     this._authService.signOut()
-      .then(() => this._router.navigate(['auth/signin']))
+      .then(() => this._router.navigate(['auth/signin']));
   }
 
   async editProfile() {
     try {
-      let attributes = {
-        'given_name': this.fnameInput.value,
-        'family_name': this.lnameInput.value,
+      const attributes = {
+        given_name: this.fnameInput.value,
+        family_name: this.lnameInput.value,
       };
 
-      await Auth.updateUserAttributes(this.user,attributes);
+      await Auth.updateUserAttributes(this.user, attributes);
       this._notification.show('Your profile information has been updated.');
     } catch (error) {
       console.error(error);

@@ -1,13 +1,13 @@
-import { Injectable } from "@angular/core";
-import { map } from "rxjs/operators";
-import { HttpClient } from "@angular/common/http";
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
-import { TrialSearch } from "../trial-search";
-import { Aws4SignerProxy } from "../../lib/Aws4SignerProxy";
-import { environment } from "../../environments/environment";
+import { TrialSearch } from '../trial-search';
+import { Aws4SignerProxy } from '../../lib/Aws4SignerProxy';
+import { environment } from '../../environments/environment';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class TrialSearchService {
   constructor(private http: HttpClient) {}
@@ -38,9 +38,9 @@ export class TrialSearchService {
     const body = JSON.stringify(trialSearch);
     const { headers } = await new Aws4SignerProxy().sign({
       url,
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body,
     });
@@ -58,7 +58,7 @@ export class TrialSearchService {
 
     const { headers } = await new Aws4SignerProxy().sign({
       url,
-      method: "DELETE",
+      method: 'DELETE',
     });
 
     return this.http.delete(url, { headers }).toPromise();

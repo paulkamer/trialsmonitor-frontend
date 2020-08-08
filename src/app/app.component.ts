@@ -4,18 +4,18 @@ import {
   EventEmitter,
   Output,
   OnInit
-} from "@angular/core";
-import { MediaMatcher } from "@angular/cdk/layout";
-import { MatSidenav } from "@angular/material/sidenav";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { AuthService } from "./auth/auth.service";
-import Auth from "@aws-amplify/auth";
-import Storage from "@aws-amplify/storage";
+} from '@angular/core';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { MatSidenav } from '@angular/material/sidenav';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthService } from './auth/auth.service';
+import Auth from '@aws-amplify/auth';
+import Storage from '@aws-amplify/storage';
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 
 export class AppComponent implements OnInit {
@@ -23,20 +23,20 @@ export class AppComponent implements OnInit {
   mobileQuery: MediaQueryList;
   nav = [
     {
-      'title': 'Home',
-      'path': '/'
+      title: 'Home',
+      path: '/'
     },
     {
-      'title': 'Trials',
-      'path': '/trials'
+      title: 'Trials',
+      path: '/trials'
     },
     {
-      'title': 'Trial searches',
-      'path': '/trial_searches'
+      title: 'Trial searches',
+      path: '/trial_searches'
     },
     {
-      'title': 'My Account',
-      'path': '/auth'
+      title: 'My Account',
+      path: '/auth'
     }
   ];
 
@@ -49,11 +49,11 @@ export class AppComponent implements OnInit {
     public auth: AuthService,
     private toast: MatSnackBar
   ) {
-    this.mobileQuery = media.matchMedia("(max-width: 600px)");
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
     auth.authState.subscribe((event: string) => {
-      if (event === AuthService.SIGN_IN) this.checkSession();
+      if (event === AuthService.SIGN_IN) { this.checkSession(); }
     });
   }
 
@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
     try {
       const userInfo = await Auth.currentUserInfo();
     } catch (error) {
-      console.error("no session: ", error);
+      console.error('no session: ', error);
     }
   }
   toggleMobileNav(nav: MatSidenav) {

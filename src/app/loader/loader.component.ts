@@ -1,16 +1,16 @@
-import { Component, OnInit, Inject } from "@angular/core";
-import { MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { Component, OnInit, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: "app-loader",
-  templateUrl: "./loader.component.html",
-  styleUrls: ["./loader.component.scss"]
+  selector: 'app-loader',
+  templateUrl: './loader.component.html',
+  styleUrls: ['./loader.component.scss']
 })
 export class LoaderComponent implements OnInit {
-  message = "Please wait...";
+  message = 'Please wait...';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    if (data.message) this.message = data.message;
+    if (data.message) { this.message = data.message; }
   }
 
   ngOnInit() {}

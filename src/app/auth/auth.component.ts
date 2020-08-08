@@ -13,14 +13,14 @@ export class AuthComponent implements OnInit {
   constructor( private _router: Router, private _zone: NgZone ) { }
 
   ngOnInit() {
-    Hub.listen("auth", ({ payload: { event, data } }) => {
+    Hub.listen('auth', ({ payload: { event, data } }) => {
       switch (event) {
-        case "signIn":
+        case 'signIn':
           this._zone.run(() => {
             this._router.navigate(['/']);
           });
           break;
-        case "signOut":
+        case 'signOut':
           this._zone.run(() => {
             this._router.navigate(['/auth/signin']);
           });

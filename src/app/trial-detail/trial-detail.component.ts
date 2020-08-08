@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { Trial } from "../trial";
+import { Trial } from '../trial';
 
 @Component({
-  selector: "app-trial-detail",
-  templateUrl: "./trial-detail.component.html",
-  styleUrls: ["./trial-detail.component.scss"],
+  selector: 'app-trial-detail',
+  templateUrl: './trial-detail.component.html',
+  styleUrls: ['./trial-detail.component.scss'],
 })
 export class TrialDetailComponent implements OnInit {
   @Input() trial: Trial | null;

@@ -1,4 +1,4 @@
-import { AwsV4Signer } from 'aws4fetch'
+import { AwsV4Signer } from 'aws4fetch';
 import { Auth } from 'aws-amplify';
 import { HttpHeaders } from '@angular/common/http';
 
@@ -21,7 +21,7 @@ export class Aws4SignerProxy {
     return request;
   }
 
-  private async initSigner (opts): AwsV4Signer {
+  private async initSigner(opts): AwsV4Signer {
     const credentials = await Auth.currentCredentials();
     const { accessKeyId, secretAccessKey, sessionToken } = credentials;
 
@@ -32,7 +32,7 @@ export class Aws4SignerProxy {
       sessionToken,
       region: 'eu-central-1',
       service: 'execute-api',
-    }
+    };
 
     this.signerInstance = new AwsV4Signer(options);
   }

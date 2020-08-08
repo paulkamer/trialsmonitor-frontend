@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 
-import { Trial } from "../trial";
-import { TrialService } from "../services/trial.service";
+import { Trial } from '../trial';
+import { TrialService } from '../services/trial.service';
 
 enum sortDirection {
   asc,
@@ -20,9 +20,9 @@ interface sortOptions {
 }
 
 @Component({
-  selector: "app-trials-list",
-  templateUrl: "./trials-list.component.html",
-  styleUrls: ["./trials-list.component.scss"],
+  selector: 'app-trials-list',
+  templateUrl: './trials-list.component.html',
+  styleUrls: ['./trials-list.component.scss'],
 })
 export class TrialsListComponent implements OnInit {
   TRIAL_LIST_PAGE_LIMIT = 25;
@@ -44,9 +44,9 @@ export class TrialsListComponent implements OnInit {
 
   trials: Trial[] = [];
   selectedTrial: Trial | null;
-  loadingTrialdetails: boolean = false;
+  loadingTrialdetails = false;
 
-  sort: keyof sortOptions = "lastUpdated";
+  sort: keyof sortOptions = 'lastUpdated';
   sortDirection: sortDirection = sortDirection.desc;
 
   constructor(private trialService: TrialService) {
@@ -84,7 +84,7 @@ export class TrialsListComponent implements OnInit {
   }
 
   sortBy(sortBy: keyof sortOptions): void {
-    if (this.SORT_OPTIONS[sortBy] === undefined) return;
+    if (this.SORT_OPTIONS[sortBy] === undefined) { return; }
 
     // Invert sort direction when sorting by the same column
     if (this.sort === sortBy) {
@@ -107,7 +107,7 @@ export class TrialsListComponent implements OnInit {
   }
 
   selectTrial(trial: Trial) {
-    if (this.selectedTrial?.trialId === trial.trialId) return;
+    if (this.selectedTrial?.trialId === trial.trialId) { return; }
 
     this.fetchTrial(trial.trialId);
   }

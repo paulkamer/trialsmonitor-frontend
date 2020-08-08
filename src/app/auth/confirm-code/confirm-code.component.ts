@@ -47,12 +47,12 @@ export class ConfirmCodeComponent implements OnInit {
               this._router.navigate(['']);
             }).catch((error: any) => {
               this._router.navigate(['auth/signin']);
-            })
+            });
         }
       })
       .catch((error: any) => {
         this._notification.show(error.message);
-      })
+      });
   }
 
 }
