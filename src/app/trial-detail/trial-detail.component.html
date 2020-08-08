@@ -1,9 +1,22 @@
-<div *ngIf="trial">
-  <h2>{{trial.title}}</h2>
+<ng-container *ngIf="isLoading === true; then loader; else trialdetails">
+</ng-container>
 
-  <p><span>NCT ID: </span>{{trial.id}}</p>
-  <p><span>Phase: </span>{{trial.phase}}</p>
-  <p><span>Status: </span>{{trial.studyStatus}}</p>
-  <p><span>Acronym: </span>{{trial.acronym}}</p>
-  <p><span>Last Updated: </span>{{ trial.lastUpdated * 1000 | date:'longDate' }}</p>
-</div>
+<ng-template #loader><div class="loader">Loading...</div> </ng-template>
+
+<ng-template #trialdetails>
+  <div *ngIf="trial">
+    <h2>
+      {{ trial.title }}
+      <span class="clickable" (click)="close()">[x]</span>
+    </h2>
+
+    <p><span>NCT ID: </span>{{ trial.trialId }}</p>
+    <p><span>Phase: </span>{{ trial.phase }}</p>
+    <p><span>Status: </span>{{ trial.studyStatus }}</p>
+    <p><span>Acronym: </span>{{ trial.acronym }}</p>
+    <p>
+      <span>Last Updated: </span
+      >{{ trial.lastUpdated * 1000 | date: "longDate" }}
+    </p>
+  </div>
+</ng-template>

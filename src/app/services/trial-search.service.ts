@@ -1,17 +1,16 @@
-import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { Injectable } from "@angular/core";
+import { map } from "rxjs/operators";
+import { HttpClient } from "@angular/common/http";
 
-import { TrialSearch } from '../trial-search';
-import { Aws4SignerProxy } from '../../lib/Aws4SignerProxy'
-import { environment } from '../../environments/environment';
+import { TrialSearch } from "../trial-search";
+import { Aws4SignerProxy } from "../../lib/Aws4SignerProxy";
+import { environment } from "../../environments/environment";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class TrialSearchService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /**
    * Fetch "trial search" queries.
@@ -24,10 +23,10 @@ export class TrialSearchService {
 
     const { headers } = await new Aws4SignerProxy().sign({ url });
 
-    return this.http.get<TrialSearch[]>(url, { headers })
-      .pipe(
-        map((res: any) => res.results)
-      ).toPromise();
+    return this.http
+      .get<TrialSearch[]>(url, { headers })
+      .pipe(map((res: any) => res.results))
+      .toPromise();
   }
 
   /**
@@ -39,23 +38,28 @@ export class TrialSearchService {
     const body = JSON.stringify(trialSearch);
     const { headers } = await new Aws4SignerProxy().sign({
       url,
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body
+      body,
     });
 
-    return this.http.post<TrialSearch>(url, body, { headers }).toPromise();
+    return this.http
+      .post<TrialSearch>(url, body, { headers })
+      .toPromise();
   }
 
   /**
    * Delete a trial search query
    */
   async deleteTrialSearch(trialSearch: TrialSearch): Promise<{}> {
-    const url = `${environment.apiHost}${environment.trialSearchesDeleteUrl}/${trialSearch.id}`;
+    const url = `${environment.apiHost}${environment.trialSearchesDeleteUrl}/${trialSearch._id}`;
 
-    const { headers } = await new Aws4SignerProxy().sign({ url, method: 'DELETE' });
+    const { headers } = await new Aws4SignerProxy().sign({
+      url,
+      method: "DELETE",
+    });
 
     return this.http.delete(url, { headers }).toPromise();
   }

@@ -1,4 +1,4 @@
 export interface TrialSearch {
-  id: string;
+  _id: string;
   query: string;
 }

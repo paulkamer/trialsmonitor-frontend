@@ -3,19 +3,33 @@
 <table class="trials-list">
   <thead>
     <tr>
-      <th (click)="sortBy('phase')">Phase</th>
-      <th class="column-title" (click)="sortBy('title')">Title</th>
-      <th (click)="sortBy('lastUpdated')">Last updated</th>
+      <th>NCT id</th>
+      <th>Acronym</th>
+      <th (click)="sortBy('phase')" class="clickable">Phase</th>
+      <th class="column-title clickable" (click)="sortBy('title')">Title</th>
+      <th (click)="sortBy('lastUpdated')" class="clickable">Last updated</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let trial of sortedTrials" [class.selected]="trial === selectedTrial" (click)="selectTrial(trial)">
-      <td>{{ trial.phase }}</td>
-      <td class="column-title">{{ trial.title }}</td>
-      <td>{{ trial.lastUpdated > 1 ? ((trial.lastUpdated * 1000) | date) : '-' }}</td>
+    <tr
+      *ngFor="let trial of sortedTrials"
+      [class.selected]="trial === selectedTrial"
+      (click)="selectTrial(trial)"
+      title="View trial details"
+    >
+      <td>{{ trial.trialId }}</td>
+      <td>{{ trial.acronym || "-" }}</td>
+      <td>{{ trial.phase || "-" }}</td>
+      <td class="column-title">{{ trial.title || "-" }}</td>
+      <td>
+        {{ trial.lastUpdated > 1 ? (trial.lastUpdated * 1000 | date) : "-" }}
+      </td>
     </tr>
   </tbody>
 </table>
 
-
-<app-trial-detail *ngIf="selectedTrial" [trial]="selectedTrial"></app-trial-detail>
+<app-trial-detail
+  [trial]="selectedTrial"
+  [isLoading]="loadingTrialdetails"
+  (closer)="onCloseDetails()"
+></app-trial-detail>

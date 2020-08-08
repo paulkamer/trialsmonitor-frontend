@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~@angular/material/theming';
+@import "~@angular/material/theming";
 
 // Plus imports for other components in your app.
 
@@ -12,11 +12,11 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $app-primary: mat-palette($mat-indigo, 800);
-$app-accent:  mat-palette($mat-amber, 800);
+$app-accent: mat-palette($mat-amber, 800);
 $app-active: mat-palette($mat-yellow, 800);
 
 // The warn palette is optional (defaults to red).
-$app-warn:    mat-palette($mat-orange);
+$app-warn: mat-palette($mat-orange);
 
 // Create the theme object (a Sass map containing all of the palettes).
 $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
@@ -27,14 +27,21 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 @include angular-material-theme($app-theme);
 
 .active {
-    color: mat-color($app-primary);
+  color: mat-color($app-primary);
 }
-.valid, .primary {
-    color: mat-color($app-primary);
+.valid,
+.primary {
+  color: mat-color($app-primary);
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 form {
   width: 100%;
@@ -63,7 +70,7 @@ a {
   padding: 2em;
 }
 
-.cursor-pointer {
+.clickable {
   cursor: pointer;
 }
 

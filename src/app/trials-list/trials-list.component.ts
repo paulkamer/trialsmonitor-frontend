@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
-import { Trial } from '../trial';
-import { TrialService } from '../services/trial.service';
+import { Trial } from "../trial";
+import { TrialService } from "../services/trial.service";
 
 enum sortDirection {
   asc,
-  desc
-};
+  desc,
+}
 
 interface sortOption {
   defaultSortDirection: sortDirection;
@@ -17,12 +17,12 @@ interface sortOptions {
   title: sortOption;
   phase: sortOption;
   lastUpdated: sortOption;
-};
+}
 
 @Component({
-  selector: 'app-trials-list',
-  templateUrl: './trials-list.component.html',
-  styleUrls: ['./trials-list.component.scss']
+  selector: "app-trials-list",
+  templateUrl: "./trials-list.component.html",
+  styleUrls: ["./trials-list.component.scss"],
 })
 export class TrialsListComponent implements OnInit {
   TRIAL_LIST_PAGE_LIMIT = 25;
@@ -44,12 +44,14 @@ export class TrialsListComponent implements OnInit {
 
   trials: Trial[] = [];
   selectedTrial: Trial | null;
+  loadingTrialdetails: boolean = false;
 
-  sort: keyof sortOptions = 'lastUpdated';
+  sort: keyof sortOptions = "lastUpdated";
   sortDirection: sortDirection = sortDirection.desc;
 
-  constructor (private trialService: TrialService) {
+  constructor(private trialService: TrialService) {
     this.selectedTrial = null;
+    this.loadingTrialdetails = false;
   }
 
   ngOnInit(): void {
@@ -57,11 +59,12 @@ export class TrialsListComponent implements OnInit {
   }
 
   getTrials(): void {
-    this.trialService.getTrials({ limit: this.TRIAL_LIST_PAGE_LIMIT })
-      .then(trials => this.trials = trials);
+    this.trialService
+      .getTrials({ limit: this.TRIAL_LIST_PAGE_LIMIT })
+      .then((trials) => (this.trials = trials));
   }
 
-  get sortedTrials () {
+  get sortedTrials() {
     return this.trials.sort((a, b) => {
       let first = a;
       let second = b;
@@ -77,16 +80,16 @@ export class TrialsListComponent implements OnInit {
       const secondValue = second[sortBy]!;
 
       return firstValue > secondValue ? 1 : firstValue === secondValue ? 0 : -1;
-    })
+    });
   }
 
-  sortBy (sortBy: keyof sortOptions): void {
+  sortBy(sortBy: keyof sortOptions): void {
     if (this.SORT_OPTIONS[sortBy] === undefined) return;
 
     // Invert sort direction when sorting by the same column
     if (this.sort === sortBy) {
       this.invertSortDirection();
-      return
+      return;
     }
 
     this.sort = sortBy;
@@ -96,18 +99,30 @@ export class TrialsListComponent implements OnInit {
   /**
    * Invert the current sort direction
    */
-  invertSortDirection (): void {
-    this.sortDirection = this.sortDirection ===sortDirection.asc ?sortDirection.desc :sortDirection.asc;
+  invertSortDirection(): void {
+    this.sortDirection =
+      this.sortDirection === sortDirection.asc
+        ? sortDirection.desc
+        : sortDirection.asc;
   }
 
   selectTrial(trial: Trial) {
-    if (this.selectedTrial && this.selectedTrial.id == trial.id) return;
+    if (this.selectedTrial?.trialId === trial.trialId) return;
 
-    this.fetchTrial(trial.id);
+    this.fetchTrial(trial.trialId);
   }
 
   fetchTrial(trialId: string): void {
-    this.trialService.getSingleTrial(trialId)
-        .then((trial) => this.selectedTrial = trial);
+    this.loadingTrialdetails = true;
+
+    this.trialService.getSingleTrial(trialId).then((trial) => {
+      this.loadingTrialdetails = false;
+      this.selectedTrial = trial;
+    });
+  }
+
+  onCloseDetails(): void {
+    this.selectedTrial = null;
+    this.loadingTrialdetails = false;
   }
 }

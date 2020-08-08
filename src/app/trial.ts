@@ -1,5 +1,5 @@
 export interface Trial {
-  id: string;
+  trialId: string;
   title: string;
   lastUpdated: number;
   phase?: string;
