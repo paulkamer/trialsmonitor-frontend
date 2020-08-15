@@ -28,6 +28,28 @@
   </tbody>
 </table>
 
+<ul *ngIf="pages.length > 1" class="pagination">
+  <li
+    [ngClass]="{ clickable: hasPrevPage }"
+    (click)="hasPrevPage && prevPage()"
+  >
+    <span>Prev</span>
+  </li>
+  <li
+    *ngFor="let p of pages"
+    [ngClass]="{ clickable: pageNumber !== p }"
+    (click)="fetchPage(p)"
+  >
+    <span>{{ p }}</span>
+  </li>
+  <li
+    [ngClass]="{ clickable: hasNextPage }"
+    (click)="hasNextPage && nextPage()"
+  >
+    <span>Next</span>
+  </li>
+</ul>
+
 <app-trial-detail
   [trial]="selectedTrial"
   [isLoading]="loadingTrialdetails"

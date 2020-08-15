@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
-import { TrialSearch } from '../trial-search';
-import { TrialSearchService } from '../services/trial-search.service';
+import { TrialSearch } from "../types/trial-search";
+import { TrialSearchService } from "../services/trial-search.service";
 
-const TRIAL_PLACEHOLDER = { _id: '', query: '' };
+const TRIAL_PLACEHOLDER = { _id: "", query: "" };
 
 @Component({
-  selector: 'app-trial-searches-list',
-  templateUrl: './trial-searches-list.component.html',
-  styleUrls: ['./trial-searches-list.component.scss'],
+  selector: "app-trial-searches-list",
+  templateUrl: "./trial-searches-list.component.html",
+  styleUrls: ["./trial-searches-list.component.scss"],
 })
 export class TrialSearchesListComponent implements OnInit {
   searches: TrialSearch[] = [];
@@ -47,7 +47,7 @@ export class TrialSearchesListComponent implements OnInit {
         this.resetNewTrial();
         this.getTrialSearches();
       })
-      .catch((error) => console.error('Saving trial failed', error));
+      .catch((error) => console.error("Saving trial failed", error));
   }
 
   deleteTrialSearch(trialSearch: TrialSearch) {
@@ -56,6 +56,6 @@ export class TrialSearchesListComponent implements OnInit {
       .then(() => {
         this.getTrialSearches();
       })
-      .catch((error) => console.error('Deleting trial failed', error));
+      .catch((error) => console.error("Deleting trial failed", error));
   }
 }

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
-import { Trial } from '../trial';
-import { TrialService } from '../services/trial.service';
+import { Trial } from "../types/trial";
+import { TrialService } from "../services/trial.service";
 
 enum sortDirection {
   asc,
@@ -20,9 +20,9 @@ interface sortOptions {
 }
 
 @Component({
-  selector: 'app-trials-list',
-  templateUrl: './trials-list.component.html',
-  styleUrls: ['./trials-list.component.scss'],
+  selector: "app-trials-list",
+  templateUrl: "./trials-list.component.html",
+  styleUrls: ["./trials-list.component.scss"],
 })
 export class TrialsListComponent implements OnInit {
   TRIAL_LIST_PAGE_LIMIT = 25;
@@ -45,8 +45,10 @@ export class TrialsListComponent implements OnInit {
   trials: Trial[] = [];
   selectedTrial: Trial | null;
   loadingTrialdetails = false;
+  totalTrials = 0;
+  pageNumber = 1;
 
-  sort: keyof sortOptions = 'lastUpdated';
+  sort: keyof sortOptions = "lastUpdated";
   sortDirection: sortDirection = sortDirection.desc;
 
   constructor(private trialService: TrialService) {
@@ -60,8 +62,14 @@ export class TrialsListComponent implements OnInit {
 
   getTrials(): void {
     this.trialService
-      .getTrials({ limit: this.TRIAL_LIST_PAGE_LIMIT })
-      .then((trials) => (this.trials = trials));
+      .getTrials({
+        limit: this.TRIAL_LIST_PAGE_LIMIT,
+        pageNumber: this.pageNumber,
+      })
+      .then((res) => {
+        this.trials = res.results;
+        this.totalTrials = res.totalTrials;
+      });
   }
 
   get sortedTrials() {
@@ -84,7 +92,9 @@ export class TrialsListComponent implements OnInit {
   }
 
   sortBy(sortBy: keyof sortOptions): void {
-    if (this.SORT_OPTIONS[sortBy] === undefined) { return; }
+    if (this.SORT_OPTIONS[sortBy] === undefined) {
+      return;
+    }
 
     // Invert sort direction when sorting by the same column
     if (this.sort === sortBy) {
@@ -94,6 +104,40 @@ export class TrialsListComponent implements OnInit {
 
     this.sort = sortBy;
     this.sortDirection = this.SORT_OPTIONS[sortBy].defaultSortDirection;
+  }
+
+  get hasPrevPage(): boolean {
+    return this.pageNumber > 1;
+  }
+
+  fetchPage(pageNumber: number) {
+    this.pageNumber = pageNumber;
+
+    this.getTrials();
+  }
+
+  get maxPage(): number {
+    return Math.ceil(this.totalTrials / this.TRIAL_LIST_PAGE_LIMIT);
+  }
+
+  prevPage(): void {
+    this.pageNumber = Math.max(this.pageNumber - 1, 1);
+
+    this.getTrials();
+  }
+
+  get hasNextPage(): boolean {
+    return this.pageNumber < this.maxPage;
+  }
+
+  nextPage(): void {
+    this.pageNumber = this.pageNumber + 1;
+
+    this.getTrials();
+  }
+
+  get pages(): Array<number> {
+    return Array.from({ length: this.maxPage }, (_, i) => i + 1);
   }
 
   /**
@@ -107,7 +151,9 @@ export class TrialsListComponent implements OnInit {
   }
 
   selectTrial(trial: Trial) {
-    if (this.selectedTrial?.trialId === trial.trialId) { return; }
+    if (this.selectedTrial?.trialId === trial.trialId) {
+      return;
+    }
 
     this.fetchTrial(trial.trialId);
   }

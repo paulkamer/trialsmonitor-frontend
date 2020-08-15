@@ -17,3 +17,17 @@
     text-overflow: ellipsis;
   }
 }
+
+.pagination {
+  user-select: none;
+
+  li {
+    display: inline;
+    padding: 0 0.5em;
+
+    &.clickable {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  }
+}
