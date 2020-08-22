@@ -28,6 +28,8 @@
   </tbody>
 </table>
 
+<span *ngIf="loadingTrials && sortedTrials.length === 0">Loading...</span>
+
 <ul *ngIf="pages.length > 1" class="pagination">
   <li
     [ngClass]="{ clickable: hasPrevPage }"

@@ -13,6 +13,7 @@ const TRIAL_PLACEHOLDER = { _id: "", query: "" };
 export class TrialSearchesListComponent implements OnInit {
   searches: TrialSearch[] = [];
   newTrial: TrialSearch = TRIAL_PLACEHOLDER;
+  loading = false;
   showAddNew = false;
 
   constructor(private trialSearchService: TrialSearchService) {}
@@ -30,6 +31,7 @@ export class TrialSearchesListComponent implements OnInit {
   }
 
   getTrialSearches(): void {
+    this.loading = true;
     this.trialSearchService
       .getSearches()
       .then(
@@ -37,7 +39,8 @@ export class TrialSearchesListComponent implements OnInit {
           (this.searches = searches.sort((a: TrialSearch, b: TrialSearch) =>
             a.query > b.query ? 1 : 0
           ))
-      );
+      )
+      .finally(() => (this.loading = false));
   }
 
   saveTrialSearch() {

@@ -42,6 +42,7 @@ export class TrialsListComponent implements OnInit {
     },
   };
 
+  loadingTrials = false;
   trials: Trial[] = [];
   selectedTrial: Trial | null;
   loadingTrialdetails = false;
@@ -61,6 +62,8 @@ export class TrialsListComponent implements OnInit {
   }
 
   getTrials(): void {
+    this.loadingTrials = true;
+
     this.trialService
       .getTrials({
         limit: this.TRIAL_LIST_PAGE_LIMIT,
@@ -69,7 +72,8 @@ export class TrialsListComponent implements OnInit {
       .then((res) => {
         this.trials = res.results;
         this.totalTrials = res.totalTrials;
-      });
+      })
+      .finally(() => (this.loadingTrials = false));
   }
 
   get sortedTrials() {

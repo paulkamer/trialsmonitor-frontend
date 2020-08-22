@@ -25,18 +25,7 @@ export class TrialService {
 
     return this.http
       .get(url, { headers })
-      .pipe(
-        map((res: any) => JSON.parse(res.body)),
-        map((data: any) => {
-          return new TrialsResponse(
-            data.results,
-            data.results_count,
-            data.totalTrials,
-            data.limit,
-            data.offset
-          );
-        })
-      )
+      .pipe(map((res: TrialsResponse) => res))
       .toPromise();
   }
 
